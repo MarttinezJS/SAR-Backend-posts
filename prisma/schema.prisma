@@ -1,0 +1,71 @@
+generator client {
+    provider      = "prisma-client-js"
+    output        = "../generated/client"
+    binaryTargets = [env("PRISMA_BINARY")]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Usuarios {
+    id              Int               @id @default(autoincrement())
+    email           String            @unique @map("correo") @db.VarChar(50)
+    username        String            @unique @map("usuario") @db.VarChar(20)
+    role            Rol               @map("rol")
+    password        String
+    firstName       String            @map("nombre") @db.VarChar(100)
+    lastName        String            @map("apellido") @db.VarChar(100)
+    changePassword  Boolean?          @default(false) @map("cambiar_password")
+    active          Boolean?          @default(true) @map("activo")
+    eventsSupported Usuario_Eventos[]
+}
+
+model Noticias {
+    id          Int       @id @default(autoincrement())
+    imageUrl    String?   @map("imagen_url")
+    title       String    @map("titulo")
+    text        String    @map("texto")
+    createdDate DateTime? @default(now())
+}
+
+model Devocionales {
+    id          Int       @id @default(autoincrement())
+    imageUrl    String    @map("imagen_url")
+    createdDate DateTime? @default(now()) @map("fecha")
+}
+
+model Eventos {
+    id            Int               @id @default(autoincrement())
+    title         String            @map("titulo")
+    description   String            @map("descripcion")
+    status        Evento_Estado     @map("estado")
+    scheduledDate DateTime          @map("fecha_programada")
+    daysDuration  Int               @map("duracion_dias")
+    usersSupport  Usuario_Eventos[]
+}
+
+model Usuario_Eventos {
+    userId  Int @map("usuario_id")
+    eventId Int @map("evento_id")
+
+    usersSupport    Usuarios @relation(fields: [userId], references: [id])
+    eventsSupported Eventos  @relation(fields: [eventId], references: [id])
+
+    @@id([userId, eventId])
+    @@index([eventId], map: "user_on_event_event_id_fkey")
+}
+
+enum Rol {
+    USUARIO
+    ADMIN
+}
+
+enum Evento_Estado {
+    REALIZADO
+    PROGRAMADO
+    EN_PROCESO
+    CANCELADO
+    REPROGRAMADO
+}

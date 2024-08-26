@@ -1,0 +1,30 @@
+# Proyect
+node_modules
+README.md
+LICENSE
+Makefile
+helm-charts
+coverage*
+prisma/migrations/*
+generated/
+sql
+bun.lockb
+migrations*
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Editor
+.vscode
+.editorconfig
+.idea
+
+# Git
+.git
+.gitignore
+
+# Env
+.env
+.env.local
