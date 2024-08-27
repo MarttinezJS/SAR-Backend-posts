@@ -5,9 +5,12 @@
   },
   "dependencies": {
     "@prisma/client": "5.18.0",
+    "cloudinary": "^2.4.0",
     "hashi-vault-js": "^0.4.16",
     "hono": "^4.5.5",
+    "jose": "^5.8.0",
     "jsonwebtoken": "^9.0.2",
+    "uuid": "^10.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
