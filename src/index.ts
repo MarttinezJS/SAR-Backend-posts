@@ -1,8 +1,14 @@
 import { Hono } from "hono";
+import { mkdirSync, existsSync } from "fs";
 import { initVault } from "./config/initVault";
 import { validateAdmin, verifyToken } from "./middlewares";
 import { devotional } from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
+import { getAbsolutePath } from "./helpers/getAbsolutePath";
+
+if (!existsSync(`${getAbsolutePath()}/generated/temp`)) {
+  mkdirSync(`${getAbsolutePath()}/generated/temp`);
+}
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

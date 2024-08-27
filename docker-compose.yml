@@ -8,6 +8,8 @@ services:
     image: sar-post-backend:1.0.0
     build: .
     restart: always
+    volumes:
+      - ~/SigueAdelanteRadio/posts/temp:/usr/app/generated/temp
     networks:
       - sigue-adelante-radio
     environment:
