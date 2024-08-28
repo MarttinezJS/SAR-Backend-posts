@@ -1,2 +1,1 @@
-export * from "./devotional";
-export * from "./lastDevotional";
+export * from "./devotionals";

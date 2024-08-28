@@ -4,7 +4,7 @@ import { writeFileSync, rmSync } from "fs";
 import { getAbsolutePath } from "../helpers/getAbsolutePath";
 
 export const uploadImage = async (file: File, uploadFolder: string) =>
-  new Promise<{ format: string; folder: string; original_filename: string }>(
+  new Promise<{ format: string; public_id: string }>(
     async (resolve, reject) => {
       const uniqueId = uuid();
       const name = `${uploadFolder}_${uniqueId}`;
@@ -19,12 +19,14 @@ export const uploadImage = async (file: File, uploadFolder: string) =>
         reject(error);
       }
       try {
-        const { format, folder, original_filename } =
-          await cloudinary.uploader.upload(filePath, {
+        const { format, public_id } = await cloudinary.uploader.upload(
+          filePath,
+          {
             folder: uploadFolder,
             use_filename: true,
-          });
-        resolve({ format, folder, original_filename });
+          }
+        );
+        resolve({ format, public_id });
       } catch (error) {
         reject(error);
       } finally {

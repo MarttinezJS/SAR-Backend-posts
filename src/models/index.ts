@@ -1,2 +1,2 @@
-export * from "./saveDevotional";
-export * from "./getLastDevotional";
+export * from "./devotional";
+export * from "./errorResponse";
