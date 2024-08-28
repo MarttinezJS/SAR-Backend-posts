@@ -24,6 +24,5 @@ FROM base AS release
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/app/ .
 COPY --from=prisma /home/bun/app/generated generated
-RUN bunx prisma generate
 
 ENTRYPOINT [ "bun", "run", "src/index.ts" ]

@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { mkdirSync, existsSync } from "fs";
 import { initVault } from "./config/initVault";
 import { validateAdmin, verifyToken } from "./middlewares";
-import { devotional } from "./controllers";
+import { devotional, lastDevotional } from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
 
@@ -25,9 +25,10 @@ const serve = async () => {
     console.info(`${c.req.path} | ${c.req.method}`);
     return next();
   });
-  app.use("*", verifyToken);
+  app.use("/data/*", verifyToken);
 
-  app.post("/devotional", validateAdmin, devotional);
+  app.get("/devotional/last", lastDevotional);
+  app.post("/data/devotional", validateAdmin, devotional);
 
   Bun.serve({
     fetch: app.fetch,

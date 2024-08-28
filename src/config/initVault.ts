@@ -16,7 +16,7 @@ const initVault = async (): Promise<void> => {
     console.info("=============Connecting Vault=============");
     const { client_token, policies, metadata, entity_id } =
       await vault.loginWithAppRole(
-        process.env.ROL_ID ?? "",
+        process.env.ROLE_ID ?? "",
         process.env.SECRET_ID ?? ""
       );
     console.table({
