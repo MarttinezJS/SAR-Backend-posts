@@ -1,0 +1,23 @@
+networks:
+  sigue-adelante-radio:
+    external: true
+
+services:
+  autentication-backend:
+    container_name: sar-post-backend
+    image: sar-post-backend:1.0.0
+    build: .
+    restart: always
+    volumes:
+      - ~/SigueAdelanteRadio/posts/temp:/usr/app/generated/temp
+      - ~/SigueAdelanteRadio/auth/secrets:/usr/app/generated/jwk:ro
+    networks:
+      - sigue-adelante-radio
+    environment:
+      PORT: 80
+      DATABASE_URL: $DATABASE_URL
+      CLOUDINARY_CLOUD_NAME: $CLOUDINARY_CLOUD_NAME
+      CLOUDINARY_API_KEY: $CLOUDINARY_API_KEY
+      CLOUDINARY_SECRET: $CLOUDINARY_SECRET
+
+    

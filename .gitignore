@@ -1,3 +1,6 @@
 # deps
 node_modules/
 bun.lockb
+.env*
+src/generated/*
+generated/
