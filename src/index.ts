@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { mkdirSync, existsSync } from "fs";
-import { initVault } from "./config/initVault";
 import { validateAdmin, verifyToken } from "./middlewares";
 import { devotional, getDevotionals, lastDevotional } from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
@@ -19,8 +18,6 @@ cloudinary.config({
 const app = new Hono();
 
 const serve = async () => {
-  await initVault();
-
   app.use("*", (c, next) => {
     console.info(`${c.req.path} | ${c.req.method}`);
     return next();

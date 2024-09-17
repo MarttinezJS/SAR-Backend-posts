@@ -10,14 +10,14 @@ services:
     restart: always
     volumes:
       - ~/SigueAdelanteRadio/posts/temp:/usr/app/generated/temp
+      - ~/SigueAdelanteRadio/auth/secrets:/usr/app/generated/jwk:ro
     networks:
       - sigue-adelante-radio
     environment:
       PORT: 80
-      # PRODUCTION: true
       DATABASE_URL: $DATABASE_URL
-      VAULT_HOST: $VAULT_HOST
-      VAULT_PORT: $VAULT_PORT
-      ROLE_ID: $ROLE_ID
-      SECRET_ID: $SECRET_ID
+      CLOUDINARY_CLOUD_NAME: $CLOUDINARY_CLOUD_NAME
+      CLOUDINARY_API_KEY: $CLOUDINARY_API_KEY
+      CLOUDINARY_SECRET: $CLOUDINARY_SECRET
+
     
