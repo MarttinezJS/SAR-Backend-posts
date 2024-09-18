@@ -1,7 +1,15 @@
 import { Hono } from "hono";
 import { mkdirSync, existsSync } from "fs";
 import { validateAdmin, verifyToken } from "./middlewares";
-import { devotional, getDevotionals, lastDevotional } from "./controllers";
+import {
+  createPartner,
+  devotional,
+  getPartners,
+  getDevotionals,
+  lastDevotional,
+  createNew,
+  getPaginatedNews,
+} from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
 
@@ -25,14 +33,18 @@ const serve = async () => {
   app.use("/data/*", verifyToken);
 
   app.get("/devotional/last", lastDevotional);
+  app.get("/partners", getPartners);
+  app.get("/news", getPaginatedNews);
   app.post("/data/devotional", validateAdmin, devotional);
+  app.post("/data/partners", validateAdmin, createPartner);
+  app.post("/data/news", validateAdmin, createNew);
   app.get("/data/devotional", validateAdmin, getDevotionals);
 
-  Bun.serve({
+  const server = Bun.serve({
     fetch: app.fetch,
     port: process.env.PORT,
   });
-  console.info(`Servidor corriendo en el puerto: ${process.env.PORT}`);
+  console.info(`Servidor corriendo en el puerto: ${server.port}`);
 };
 
 serve();
