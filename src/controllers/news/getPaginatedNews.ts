@@ -2,10 +2,12 @@ import { Context, Env } from "hono";
 import { getNews } from "../../models";
 
 export const getPaginatedNews = async (context: Context<Env, "", {}>) => {
-  const { page, size } = context.req.query();
+  const { rawPage, rawSize } = context.req.query();
+  const page = Number.parseInt(rawPage);
+  const size = Number.parseInt(rawSize);
   const news = await getNews(
-    Number.parseInt(page) ?? 0,
-    Number.parseInt(size) ?? 10
+    Number.isNaN(page) ? 0 : page,
+    Number.isNaN(size) ? 10 : page
   );
   if (news.isError) {
     return context.json(
