@@ -1,7 +1,12 @@
 import { Hono } from "hono";
 import { mkdirSync, existsSync } from "fs";
 import { validateAdmin, verifyToken } from "./middlewares";
-import { devotional, getDevotionals, lastDevotional } from "./controllers";
+import {
+  createPartner,
+  devotional,
+  getDevotionals,
+  lastDevotional,
+} from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
 
@@ -26,6 +31,7 @@ const serve = async () => {
 
   app.get("/devotional/last", lastDevotional);
   app.post("/data/devotional", validateAdmin, devotional);
+  app.post("/data/partners", validateAdmin, createPartner);
   app.get("/data/devotional", validateAdmin, getDevotionals);
 
   Bun.serve({
