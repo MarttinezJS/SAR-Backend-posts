@@ -1,2 +1,2 @@
-export * from "./createPartner";
+export * from "./savePartner";
 export * from "./getAllPartners";

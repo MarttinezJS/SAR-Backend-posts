@@ -4,6 +4,7 @@ import { validateAdmin, verifyToken } from "./middlewares";
 import {
   createPartner,
   devotional,
+  getPartners,
   getDevotionals,
   lastDevotional,
 } from "./controllers";
@@ -30,15 +31,16 @@ const serve = async () => {
   app.use("/data/*", verifyToken);
 
   app.get("/devotional/last", lastDevotional);
+  app.get("/partners", getPartners);
   app.post("/data/devotional", validateAdmin, devotional);
   app.post("/data/partners", validateAdmin, createPartner);
   app.get("/data/devotional", validateAdmin, getDevotionals);
 
-  Bun.serve({
+  const server = Bun.serve({
     fetch: app.fetch,
     port: process.env.PORT,
   });
-  console.info(`Servidor corriendo en el puerto: ${process.env.PORT}`);
+  console.info(`Servidor corriendo en el puerto: ${server.port}`);
 };
 
 serve();

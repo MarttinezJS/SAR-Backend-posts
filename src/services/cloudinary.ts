@@ -34,3 +34,6 @@ export const uploadImage = async (file: File, uploadFolder: string) =>
       }
     }
   );
+
+// export const getAllImages = async (folder: string) => {
+// };
