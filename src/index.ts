@@ -7,6 +7,7 @@ import {
   getPartners,
   getDevotionals,
   lastDevotional,
+  createNew,
 } from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
@@ -34,6 +35,7 @@ const serve = async () => {
   app.get("/partners", getPartners);
   app.post("/data/devotional", validateAdmin, devotional);
   app.post("/data/partners", validateAdmin, createPartner);
+  app.post("/data/news", validateAdmin, createNew);
   app.get("/data/devotional", validateAdmin, getDevotionals);
 
   const server = Bun.serve({

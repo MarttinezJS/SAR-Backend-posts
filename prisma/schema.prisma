@@ -32,6 +32,7 @@ model Noticias {
   imageUrl    String?   @map("imagen_url")
   title       String    @map("titulo")
   text        String    @map("texto")
+  abstract    String    @map("resumen")
   createdDate DateTime? @default(now())
 }
 
