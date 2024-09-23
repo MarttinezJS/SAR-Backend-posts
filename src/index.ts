@@ -1,18 +1,19 @@
 import { Hono } from "hono";
 import { mkdirSync, existsSync } from "fs";
-import { validateAdmin, verifyToken } from "./middlewares";
+import { validateAdmin, validateFields, verifyToken } from "./middlewares";
 import {
   createPartner,
   devotional,
-  getPartners,
   getDevotionals,
   lastDevotional,
   createNew,
   getPaginatedNews,
   getActivePartners,
+  partnerRegister,
 } from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
+import { partnerRegisterSchema } from "./schemas";
 
 if (!existsSync(`${getAbsolutePath()}/generated/temp`)) {
   mkdirSync(`${getAbsolutePath()}/generated/temp`);
@@ -35,6 +36,7 @@ const serve = async () => {
 
   app.get("/devotional/last", lastDevotional);
   app.get("/partners/active", getActivePartners);
+  app.post("/partners", validateFields(partnerRegisterSchema), partnerRegister);
   app.get("/news", getPaginatedNews);
   app.post("/data/devotional", validateAdmin, devotional);
   app.post("/data/partners", validateAdmin, createPartner);
