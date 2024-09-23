@@ -3,8 +3,6 @@ import { openPrisma } from "../../services";
 
 export const getNews = (page: number, size: number) =>
   openPrisma(async () => {
-    console.log({ page, size });
-
     const offset = page * size;
     const count = await prismaClient.noticias.count({});
     const results = await prismaClient.noticias.findMany({

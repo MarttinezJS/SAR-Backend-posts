@@ -3,12 +3,11 @@ import { uploadImage } from "../../services";
 import { savePartners } from "../../models";
 
 export const createPartner = async (context: Context<Env, "", {}>) => {
-  const body = await context.req.parseBody();
-  const image = body.image as File;
+  const { image, ...body } = await context.req.parseBody();
   try {
-    const { format, public_id } = await uploadImage(image, "partners");
+    const { format, public_id } = await uploadImage(image as File, "partners");
     const imageUrl = `${public_id}.${format}`;
-    const partner = await savePartners(imageUrl);
+    const partner = await savePartners(imageUrl, body as any);
     if (partner.isError) {
       return context.json(
         {

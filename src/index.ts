@@ -9,6 +9,7 @@ import {
   lastDevotional,
   createNew,
   getPaginatedNews,
+  getActivePartners,
 } from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
@@ -33,7 +34,7 @@ const serve = async () => {
   app.use("/data/*", verifyToken);
 
   app.get("/devotional/last", lastDevotional);
-  app.get("/partners", getPartners);
+  app.get("/partners/active", getActivePartners);
   app.get("/news", getPaginatedNews);
   app.post("/data/devotional", validateAdmin, devotional);
   app.post("/data/partners", validateAdmin, createPartner);

@@ -8,7 +8,7 @@ import {
 import prismaClient from "../helpers/prismaClient";
 import { ErrorResp } from "../models";
 
-export const openPrisma = async <T>(
+export const openPrisma = async <T extends Array<unknown>>(
   callback: () => Promise<T>
 ): Promise<ErrorResp<T>> => {
   let resp: ErrorResp<T> = {
@@ -18,6 +18,7 @@ export const openPrisma = async <T>(
   try {
     await prismaClient.$connect();
     const data = await callback();
+    resp.statusCode = data.length == 0 ? 204 : 200;
     resp.data = data;
   } catch (error: any) {
     resp = {
