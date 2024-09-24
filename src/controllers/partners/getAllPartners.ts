@@ -1,9 +1,16 @@
 import { Context, Env } from "hono";
-import { getAllPartners } from "../../models";
+import { getAllPartners, PaginatedResp } from "../../models";
+import { Partners } from "../../../generated/client";
 
 export const getPartners = async (context: Context<Env, "", {}>) => {
   try {
-    const partners = await getAllPartners();
+    const { page: rawPage, size: rawSize } = context.req.query();
+    const page = Number.parseInt(rawPage);
+    const size = Number.parseInt(rawSize);
+    const partners = await getAllPartners(
+      Number.isNaN(page) ? 0 : page,
+      Number.isNaN(size) ? 10 : size
+    );
     if (partners.isError) {
       return context.json(
         {
@@ -15,13 +22,15 @@ export const getPartners = async (context: Context<Env, "", {}>) => {
         partners.statusCode
       );
     }
+    const resp = partners.data as PaginatedResp<Partners>;
 
-    if (partners.data?.length == 0) {
+    if (resp.count == 0) {
       return context.json(
         {
           error: false,
           message: "No hay patrocinadores registrados",
           status: 204,
+          body: resp,
         },
         200
       );
