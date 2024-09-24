@@ -4,6 +4,6 @@ export interface ErrorResp<T> {
   message: string;
   isError: boolean;
   meta?: Record<string, unknown>;
-  data?: T;
+  data?: T[] | T;
   statusCode?: StatusCode;
 }

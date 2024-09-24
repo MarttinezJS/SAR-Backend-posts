@@ -23,8 +23,17 @@ model Usuarios {
 }
 
 model Partners {
-  id       Int    @id @default(autoincrement())
-  imageUrl String @map("imagen_url")
+  id               Int       @id @default(autoincrement())
+  imageUrl         String?   @map("imagen_url")
+  subscriptionDate DateTime? @default(dbgenerated()) @map("fecha_subscripcion")
+  expirationDate   DateTime? @map("fecha_caducidad")
+  active           Boolean?  @default(false) @map("activo")
+  amount           String?   @map("donacion")
+  companyName      String    @unique() @map("empresa")
+  nit              String    @unique()
+  contact          String    @map("representante")
+  contactNumber    String    @map("telefono")
+  email            String    @map("correo")
 }
 
 model Noticias {
