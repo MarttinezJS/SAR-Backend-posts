@@ -15,6 +15,7 @@ import {
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
 import { partnerRegisterSchema } from "./schemas";
+import { uploadLogo } from "./controllers/partners/uploadLogo";
 
 if (!existsSync(`${getAbsolutePath()}/generated/temp`)) {
   mkdirSync(`${getAbsolutePath()}/generated/temp`);
@@ -44,6 +45,7 @@ const serve = async () => {
   app.get("/data/partners", validateAdmin, getPartners);
   app.post("/data/news", validateAdmin, createNew);
   app.get("/data/devotional", validateAdmin, getDevotionals);
+  app.post("/data/partners/:id/logo", validateAdmin, uploadLogo);
 
   const server = Bun.serve({
     fetch: app.fetch,
