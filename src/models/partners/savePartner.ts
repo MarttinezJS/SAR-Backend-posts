@@ -29,15 +29,17 @@ export const savePartners = (imageUrl: string | undefined, data: Partners) =>
     const active = new Boolean(data.active).valueOf();
     if (active) {
       const dateNow = new Date(Date.now());
-      subscriptionDate = dateNow;
+      subscriptionDate = new Date(Date.now());
       dateNow.setFullYear(dateNow.getFullYear() + 1);
       expirationDate = dateNow;
+      console.log({ expirationDate, subscriptionDate });
     }
+
     return await prismaClient.partners.create({
       data: {
         ...data,
         subscriptionDate,
-        expirationDate: expirationDate,
+        expirationDate,
         imageUrl,
         active,
       },

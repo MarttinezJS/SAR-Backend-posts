@@ -28,7 +28,7 @@ export const createPartner = async (context: Context<Env, "", {}>) => {
     return context.json(
       {
         error: false,
-        message: "Imagen guardada",
+        message: "Patrocinador registrado",
         status: 200,
         body: partner.data,
       },
