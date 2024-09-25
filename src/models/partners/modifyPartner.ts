@@ -16,8 +16,17 @@ export const modifyPartner = (data: Partial<Partners>, id: number) =>
         { clientVersion: "1" }
       );
     }
+    let subscriptionDate;
+    let expirationDate;
+    const active = new Boolean(data.active).valueOf();
+    if (active) {
+      const dateNow = new Date(Date.now());
+      subscriptionDate = new Date(Date.now());
+      dateNow.setFullYear(dateNow.getFullYear() + 1);
+      expirationDate = dateNow;
+    }
     return prismaClient.partners.update({
-      data: { ...data, id },
+      data: { ...data, id, subscriptionDate, expirationDate, active },
       where: {
         id,
       },

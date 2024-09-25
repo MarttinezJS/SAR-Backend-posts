@@ -32,7 +32,6 @@ export const savePartners = (imageUrl: string | undefined, data: Partners) =>
       subscriptionDate = new Date(Date.now());
       dateNow.setFullYear(dateNow.getFullYear() + 1);
       expirationDate = dateNow;
-      console.log({ expirationDate, subscriptionDate });
     }
 
     return await prismaClient.partners.create({
