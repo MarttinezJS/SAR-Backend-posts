@@ -3,24 +3,16 @@ import { PrismaClientValidationError } from "../../../generated/client/runtime/l
 import prismaClient from "../../helpers/prismaClient";
 import { openPrisma } from "../../services";
 
-export const savePartners = (imageUrl: string | undefined, data: Partners) =>
+export const modifyPartner = (data: Partial<Partners>, id: number) =>
   openPrisma(async () => {
-    const found = await prismaClient.partners.findFirst({
+    const found = prismaClient.partners.findFirst({
       where: {
-        OR: [
-          {
-            nit: data.nit,
-          },
-          {
-            companyName: data.companyName,
-          },
-        ],
+        id,
       },
     });
-
-    if (found) {
+    if (!found) {
       throw new PrismaClientValidationError(
-        "Ya existe una empresa con ese registro",
+        "El registro de patrocinador no existe.",
         { clientVersion: "1" }
       );
     }
@@ -33,14 +25,10 @@ export const savePartners = (imageUrl: string | undefined, data: Partners) =>
       dateNow.setFullYear(dateNow.getFullYear() + 1);
       expirationDate = dateNow;
     }
-
-    return await prismaClient.partners.create({
-      data: {
-        ...data,
-        subscriptionDate,
-        expirationDate,
-        imageUrl,
-        active,
+    return prismaClient.partners.update({
+      data: { ...data, id, subscriptionDate, expirationDate, active },
+      where: {
+        id,
       },
     });
   });

@@ -11,6 +11,8 @@ import {
   getActivePartners,
   partnerRegister,
   getPartners,
+  updatePartner,
+  uploadLogo,
 } from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
@@ -44,6 +46,8 @@ const serve = async () => {
   app.get("/data/partners", validateAdmin, getPartners);
   app.post("/data/news", validateAdmin, createNew);
   app.get("/data/devotional", validateAdmin, getDevotionals);
+  app.post("/data/partners/:id/logo", validateAdmin, uploadLogo);
+  app.put("/data/partners/:id", validateAdmin, updatePartner);
 
   const server = Bun.serve({
     fetch: app.fetch,

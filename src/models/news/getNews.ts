@@ -1,3 +1,5 @@
+import { Noticias } from "../../../generated/client";
+import { getPaginatedResp } from "../../helpers/getPaginatedResp";
 import prismaClient from "../../helpers/prismaClient";
 import { openPrisma } from "../../services";
 
@@ -9,10 +11,5 @@ export const getNews = (page: number, size: number) =>
       take: size,
       skip: offset,
     });
-    return {
-      count,
-      next: offset + results.length < count ? page + 1 : undefined,
-      previous: page > 0 ? page - 1 : undefined,
-      results,
-    };
+    return getPaginatedResp<Noticias>(page, size, results, count);
   });
