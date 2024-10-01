@@ -37,17 +37,26 @@ const serve = async () => {
   });
   app.use("/data/*", verifyToken);
 
-  app.get("/devotional/last", lastDevotional);
-  app.get("/partners/active", getActivePartners);
+  // Partners
   app.post("/partners", validateFields(partnerRegisterSchema), partnerRegister);
-  app.get("/news", getPaginatedNews);
-  app.post("/data/devotional", validateAdmin, devotional);
   app.post("/data/partners", validateAdmin, createPartner);
-  app.get("/data/partners", validateAdmin, getPartners);
-  app.post("/data/news", validateAdmin, createNew);
-  app.get("/data/devotional", validateAdmin, getDevotionals);
   app.post("/data/partners/:id/logo", validateAdmin, uploadLogo);
+
+  app.get("/partners/active", getActivePartners);
+  app.get("/data/partners", validateAdmin, getPartners);
+
   app.put("/data/partners/:id", validateAdmin, updatePartner);
+
+  // Devotional
+  app.post("/data/devotional", validateAdmin, devotional);
+
+  app.get("/devotional/last", lastDevotional);
+  app.get("/data/devotional", validateAdmin, getDevotionals);
+
+  // News
+  app.post("/data/news", validateAdmin, createNew);
+
+  app.get("/news", getPaginatedNews);
 
   const server = Bun.serve({
     fetch: app.fetch,
