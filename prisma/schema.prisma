@@ -29,6 +29,8 @@ model Partners {
   expirationDate   DateTime? @map("fecha_caducidad")
   active           Boolean?  @default(false) @map("activo")
   amount           String?   @map("donacion")
+  about            String?   @map("descripcion_negocio")
+  webSite          String?   @map("sitio_web")
   companyName      String    @unique() @map("empresa")
   nit              String    @unique()
   contact          String    @map("representante")
