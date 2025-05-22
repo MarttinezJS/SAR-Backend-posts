@@ -13,6 +13,7 @@ import {
   getPartners,
   updatePartner,
   uploadLogo,
+  cancelSub,
 } from "./controllers";
 import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
@@ -46,6 +47,8 @@ const serve = async () => {
   app.get("/data/partners", validateAdmin, getPartners);
 
   app.put("/data/partners/:id", validateAdmin, updatePartner);
+
+  app.delete("/data/partners/:id/sub", validateAdmin, cancelSub);
 
   // Devotional
   app.post("/data/devotional", validateAdmin, devotional);

@@ -25,14 +25,14 @@ model Usuarios {
 model Partners {
   id               Int       @id @default(autoincrement())
   imageUrl         String?   @map("imagen_url")
-  subscriptionDate DateTime? @default(dbgenerated()) @map("fecha_subscripcion")
+  subscriptionDate DateTime? @map("fecha_subscripcion")
   expirationDate   DateTime? @map("fecha_caducidad")
   active           Boolean?  @default(false) @map("activo")
   amount           String?   @map("donacion")
   about            String?   @map("descripcion_negocio")
   webSite          String?   @map("sitio_web")
-  companyName      String    @unique() @map("empresa")
-  nit              String    @unique()
+  companyName      String    @unique @map("empresa")
+  nit              String    @unique
   contact          String    @map("representante")
   contactNumber    String    @map("telefono")
   email            String    @map("correo")
@@ -71,6 +71,13 @@ model Usuario_Eventos {
 
   @@id([userId, eventId])
   @@index([eventId], map: "user_on_event_event_id_fkey")
+}
+
+model Puntos_Url {
+  id     Int      @id @default(autoincrement())
+  url    String
+  nombre String
+  activo Boolean? @default(true)
 }
 
 enum Rol {

@@ -4,3 +4,4 @@ export * from "./partnerRegister";
 export * from "./getActivePartners";
 export * from "./updatePartner";
 export * from "./uploadLogo";
+export * from "./cancelSub";
