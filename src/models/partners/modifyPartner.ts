@@ -1,5 +1,5 @@
 import { Partners } from "../../../generated/client";
-import { PrismaClientValidationError } from "../../../generated/client/runtime/library";
+import { PrismaClientValidationError } from "../../../generated/client/runtime/client";
 import prismaClient from "../../helpers/prismaClient";
 import { openPrisma } from "../../services";
 
@@ -13,7 +13,7 @@ export const modifyPartner = (data: Partial<Partners>, id: number) =>
     if (!found) {
       throw new PrismaClientValidationError(
         "El registro de patrocinador no existe.",
-        { clientVersion: "1" }
+        { clientVersion: "1" },
       );
     }
     let subscriptionDate;

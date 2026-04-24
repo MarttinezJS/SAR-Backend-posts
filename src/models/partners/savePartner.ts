@@ -1,5 +1,5 @@
 import { Partners } from "../../../generated/client";
-import { PrismaClientValidationError } from "../../../generated/client/runtime/library";
+import { PrismaClientValidationError } from "../../../generated/client/runtime/client";
 import prismaClient from "../../helpers/prismaClient";
 import { openPrisma } from "../../services";
 
@@ -21,7 +21,7 @@ export const savePartners = (imageUrl: string | undefined, data: Partners) =>
     if (found) {
       throw new PrismaClientValidationError(
         "Ya existe una empresa con ese registro",
-        { clientVersion: "1" }
+        { clientVersion: "1" },
       );
     }
     let subscriptionDate;

@@ -3,7 +3,7 @@ networks:
     external: true
 
 services:
-  autentication-backend:
+  post-backend:
     container_name: sar-post-backend
     image: sar-post-backend:1.0.0
     build: .
@@ -19,5 +19,6 @@ services:
       CLOUDINARY_CLOUD_NAME: $CLOUDINARY_CLOUD_NAME
       CLOUDINARY_API_KEY: $CLOUDINARY_API_KEY
       CLOUDINARY_SECRET: $CLOUDINARY_SECRET
+      NEWS_KEY: $NEWS_KEY
 
     

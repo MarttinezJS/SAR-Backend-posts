@@ -10,6 +10,28 @@ export const getNews = (page: number, size: number) =>
     const results = await prismaClient.noticias.findMany({
       take: size,
       skip: offset,
+      orderBy: [
+        {
+          featured: "desc",
+        },
+        {
+          createdDate: "desc",
+        },
+      ],
     });
     return getPaginatedResp<Noticias>(page, size, results, count);
+  });
+
+export const getFeaturedNews = () =>
+  openPrisma(async () => {
+    const result = await prismaClient.noticias.findMany({
+      where: {
+        featured: true,
+      },
+      orderBy: {
+        createdDate: "desc",
+      },
+      take: 5,
+    });
+    return result;
   });

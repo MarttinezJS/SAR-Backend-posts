@@ -14,20 +14,15 @@ import {
   updatePartner,
   uploadLogo,
   cancelSub,
+  getFeaturedNewsController,
 } from "./controllers";
-import { v2 as cloudinary } from "cloudinary";
 import { getAbsolutePath } from "./helpers/getAbsolutePath";
 import { partnerRegisterSchema } from "./schemas";
+import { fetchNews } from "./services/cronService";
 
 if (!existsSync(`${getAbsolutePath()}/generated/temp`)) {
   mkdirSync(`${getAbsolutePath()}/generated/temp`);
 }
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-});
 
 const app = new Hono();
 
@@ -36,7 +31,7 @@ const serve = async () => {
     console.info(`${c.req.path} | ${c.req.method}`);
     return next();
   });
-  app.use("/data/*", verifyToken);
+  // app.use("/data/*", verifyToken);
 
   // Partners
   app.post("/partners", validateFields(partnerRegisterSchema), partnerRegister);
@@ -57,8 +52,8 @@ const serve = async () => {
   app.get("/data/devotional", validateAdmin, getDevotionals);
 
   // News
-  app.post("/data/news", validateAdmin, createNew);
-
+  app.post("/data/news", createNew);
+  app.get("/news/featured", getFeaturedNewsController);
   app.get("/news", getPaginatedNews);
 
   const server = Bun.serve({
@@ -66,6 +61,7 @@ const serve = async () => {
     port: process.env.PORT,
   });
   console.info(`Servidor corriendo en el puerto: ${server.port}`);
+  // fetchNews.start();
 };
 
 serve();

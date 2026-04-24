@@ -1,7 +1,8 @@
 import { Context, Env } from "hono";
-import { NewCommand, saveNew } from "../../models";
+import { saveNew } from "../../models";
 import { uploadImage } from "../../services";
 import { Noticias } from "../../../generated/client";
+
 export const createNew = async (context: Context<Env, "", {}>) => {
   const body = await context.req.parseBody();
   const file = body.image as File;
@@ -12,7 +13,7 @@ export const createNew = async (context: Context<Env, "", {}>) => {
         message: "Se debe subir una imagen.",
         status: 400,
       },
-      400
+      400,
     );
   }
   const image = file ? await uploadImage(file, "news") : null;
@@ -22,6 +23,8 @@ export const createNew = async (context: Context<Env, "", {}>) => {
     text: body.text as string,
     title: body.title as string,
     imageUrl: image ? `${image.public_id}.${image.format}` : null,
+    sourceName: "Por Redacción",
+    articleId: Bun.randomUUIDv7(),
   };
   const newResp = await saveNew(data as Noticias);
   if (newResp.isError) {
@@ -32,7 +35,7 @@ export const createNew = async (context: Context<Env, "", {}>) => {
         status: newResp.statusCode,
         body: newResp.meta,
       },
-      newResp.statusCode ?? 500
+      newResp.statusCode ?? 500,
     );
   }
   return context.json(
@@ -42,6 +45,6 @@ export const createNew = async (context: Context<Env, "", {}>) => {
       status: 200,
       body: newResp.data,
     },
-    200
+    200,
   );
 };

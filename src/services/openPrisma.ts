@@ -1,16 +1,16 @@
 import { array } from "zod";
+import prismaClient from "../helpers/prismaClient";
+import { ErrorResp } from "../models";
 import {
   PrismaClientKnownRequestError,
   PrismaClientInitializationError,
   PrismaClientUnknownRequestError,
   PrismaClientRustPanicError,
   PrismaClientValidationError,
-} from "../../generated/client/runtime/library";
-import prismaClient from "../helpers/prismaClient";
-import { ErrorResp } from "../models";
+} from "@prisma/client/runtime/client";
 
 export const openPrisma = async <T extends any>(
-  callback: () => Promise<T[] | T>
+  callback: () => Promise<T[] | T>,
 ): Promise<ErrorResp<T>> => {
   let resp: ErrorResp<T> = {
     isError: false,
@@ -19,7 +19,7 @@ export const openPrisma = async <T extends any>(
   try {
     await prismaClient.$connect();
     const data = await callback();
-    resp.statusCode = data instanceof Array && data.length == 0 ? 204 : 200;
+    resp.statusCode = data instanceof Array && data.length == 0 ? 202 : 200;
     resp.data = data;
   } catch (error: any) {
     resp = {

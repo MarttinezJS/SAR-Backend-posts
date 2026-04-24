@@ -1,0 +1,147 @@
+--progress is a global compose flag, better use `docker compose --progress xx build ...
+time="2026-04-24T16:38:26-05:00" level=warning msg="The \"CLOUDINARY_SECRET\" variable is not set. Defaulting to a blank string."
+Compose can now delegate builds to bake for better performance.
+ To do so, set COMPOSE_BAKE=true.
+#0 building with "default" instance using docker driver
+
+#1 [post-backend internal] load build definition from Dockerfile
+#1 transferring dockerfile: 810B done
+#1 DONE 0.0s
+
+#2 [post-backend internal] load metadata for docker.io/oven/bun:1.3
+#2 DONE 0.5s
+
+#3 [post-backend internal] load .dockerignore
+#3 transferring context: 307B done
+#3 DONE 0.0s
+
+#4 [post-backend prisma 1/5] FROM docker.io/oven/bun:1.3@sha256:87416c977a612a204eb54ab9f3927023c2a3c971f4f345a01da08ea6262ae30e
+#4 CACHED
+
+#5 [post-backend base 2/2] WORKDIR /usr/app
+#5 CACHED
+
+#6 [post-backend internal] load build context
+#6 transferring context: 8.92kB done
+#6 DONE 0.0s
+
+#7 [post-backend prisma 2/5] COPY prisma prisma
+#7 DONE 0.0s
+
+#8 [post-backend install 1/6] RUN mkdir -p /temp/dev
+#8 DONE 0.1s
+
+#9 [post-backend install 2/6] COPY package.json /temp/dev/
+#9 DONE 0.0s
+
+#10 [post-backend install 3/6] RUN cd /temp/dev && bun install --frozen-lockfile
+#10 0.109 bun install v1.3.13 (bf2e2cec)
+#10 0.112 Resolving dependencies
+#10 4.277 Resolved, downloaded and extracted [646]
+#10 5.608 
+#10 5.608 + @types/bun@1.3.13
+#10 5.608 + @types/uuid@11.0.0
+#10 5.608 + prisma@7.8.0
+#10 5.608 + @prisma/adapter-pg@7.8.0
+#10 5.608 + @prisma/client@7.8.0
+#10 5.608 + axios@1.15.2
+#10 5.608 + cloudinary@2.9.0
+#10 5.608 + cron@4.4.0
+#10 5.608 + hono@4.12.15
+#10 5.608 + jose@6.2.2
+#10 5.608 + jsonwebtoken@9.0.3
+#10 5.608 + uuid@14.0.0
+#10 5.608 + zod@4.3.6
+#10 5.608 
+#10 5.608 165 packages installed [5.50s]
+#10 DONE 6.0s
+
+#11 [post-backend install 4/6] RUN mkdir -p /temp/prod
+#11 DONE 0.1s
+
+#12 [post-backend install 5/6] COPY package.json /temp/prod/
+#12 DONE 0.0s
+
+#13 [post-backend install 6/6] RUN cd /temp/prod && bun install --frozen-lockfile --production
+#13 0.130 bun install v1.3.13 (bf2e2cec)
+#13 0.156 Resolving dependencies
+#13 0.156 Resolved, downloaded and extracted [0]
+#13 8.069 
+#13 8.069 + @prisma/adapter-pg@7.8.0
+#13 8.069 + @prisma/client@7.8.0
+#13 8.069 + axios@1.15.2
+#13 8.069 + cloudinary@2.9.0
+#13 8.069 + cron@4.4.0
+#13 8.069 + hono@4.12.15
+#13 8.069 + jose@6.2.2
+#13 8.069 + jsonwebtoken@9.0.3
+#13 8.069 + uuid@14.0.0
+#13 8.069 + zod@4.3.6
+#13 8.069 
+#13 8.069 162 packages installed [7.94s]
+#13 DONE 8.1s
+
+#14 [post-backend prerelease 1/1] COPY . .
+#14 DONE 0.0s
+
+#15 [post-backend release 1/4] COPY --from=install /temp/prod/node_modules node_modules
+#15 DONE 1.5s
+
+#16 [post-backend prisma 3/5] COPY --from=install /temp/dev/node_modules node_modules
+#16 ...
+
+#17 [post-backend release 2/4] COPY --from=prerelease /usr/app/ .
+#17 DONE 0.1s
+
+#16 [post-backend prisma 3/5] COPY --from=install /temp/dev/node_modules node_modules
+#16 DONE 1.2s
+
+#18 [post-backend prisma 4/5] RUN bunx prisma generate
+#18 0.999 Prisma schema loaded from prisma/schema.prisma.
+#18 1.126 
+#18 1.126 ✔ Generated Prisma Client (v7.8.0) to ./generated/client in 84ms
+#18 1.126 
+#18 1.126 Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+#18 1.126 
+#18 1.126 
+#18 DONE 1.2s
+
+#19 [post-backend prisma 5/5] RUN ls -al && pwd
+#19 0.130 total 28
+#19 0.130 drwxr-xr-x 1 root root 4096 Apr 24 21:38 .
+#19 0.130 drwx------ 1 bun  bun  4096 Apr 20 08:10 ..
+#19 0.130 drwxr-xr-x 3 root root 4096 Apr 24 21:38 generated
+#19 0.130 drwxr-xr-x 1 root root 4096 Apr 24 21:38 node_modules
+#19 0.130 drwxr-xr-x 3 root root 4096 Apr 24 21:20 prisma
+#19 0.130 /home/bun/app
+#19 DONE 0.1s
+
+#20 [post-backend release 3/4] COPY --from=prisma /home/bun/app/generated generated
+#20 DONE 0.0s
+
+#21 [post-backend release 4/4] RUN ls -al && pwd
+#21 0.104 total 80
+#21 0.104 drwxr-xr-x   1 root root  4096 Apr 24 21:38 .
+#21 0.104 drwxr-xr-x   1 root root  4096 Apr 24 21:08 ..
+#21 0.104 -rw-rw-r--   1 root root   571 Apr 24 21:38 build.log
+#21 0.104 -rw-r--r--   1 root root 34888 Apr 24 21:17 bun.lock
+#21 0.104 drwxr-xr-x   3 root root  4096 Apr 24 21:38 generated
+#21 0.104 drwxr-xr-x 136 root root  4096 Apr 24 21:38 node_modules
+#21 0.104 -rw-rw-r--   1 root root   485 Apr 24 21:17 package.json
+#21 0.104 drwxrwxr-x   3 root root  4096 Apr 24 21:20 prisma
+#21 0.104 -rw-rw-r--   1 root root   247 Apr 24 21:13 prisma.config.ts
+#21 0.104 drwxrwxr-x  10 root root  4096 Apr 14 01:25 src
+#21 0.104 -rw-rw-r--   1 root root   108 Nov 26  2024 tsconfig.json
+#21 0.104 /usr/app
+#21 DONE 0.1s
+
+#22 [post-backend] exporting to image
+#22 exporting layers
+#22 exporting layers 0.9s done
+#22 writing image sha256:40248ede9d18b0cd12f540c0712f17f1ed1da09f35a9e77979a0f88c3226a73e done
+#22 naming to docker.io/library/sar-post-backend:1.0.0 done
+#22 DONE 0.9s
+
+#23 [post-backend] resolving provenance for metadata file
+#23 DONE 0.0s
+ post-backend  Built

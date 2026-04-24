@@ -6,7 +6,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model Usuarios {
@@ -40,11 +39,18 @@ model Partners {
 
 model Noticias {
   id          Int       @id @default(autoincrement())
-  imageUrl    String?   @map("imagen_url")
   title       String    @map("titulo")
-  text        String    @map("texto")
-  abstract    String    @map("resumen")
+  sourceName  String    @map("fuente_nombre")
+  link        String?   @map("enlace")
+  sourceLink  String?   @map("fuente_enlace")
+  sourceIcon  String?   @map("fuente_icono")
+  articleId   String?   @unique @map("id_noticia_api")
+  text        String?   @map("texto")
+  abstract    String?   @map("resumen")
+  imageUrl    String?   @map("imagen_url")
+  videoUrl    String?   @map("video_url")
   createdDate DateTime? @default(now())
+  featured    Boolean?  @default(false) @map("destacado")
 }
 
 model Devocionales {
@@ -78,6 +84,13 @@ model Puntos_Url {
   url    String
   nombre String
   activo Boolean? @default(true)
+}
+
+model UsuariosApp {
+  id          Int      @id @default(autoincrement())
+  token       String
+  dispositivo String   @unique
+  update      DateTime @default(now())
 }
 
 enum Rol {
