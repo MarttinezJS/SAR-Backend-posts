@@ -61,7 +61,7 @@ const serve = async () => {
     port: process.env.PORT,
   });
   console.info(`Servidor corriendo en el puerto: ${server.port}`);
-  // fetchNews.start();
+  fetchNews.start();
 };
 
 serve();

@@ -14,7 +14,7 @@ RUN cd /temp/prod && bun install --frozen-lockfile --production
 FROM oven/bun:1.3  AS prisma
 COPY prisma prisma
 COPY --from=install /temp/dev/node_modules node_modules
-ARG PRISMA_BINARY='["debian-openssl-1.1.x", "debian-openssl-3.0.x"]'
+ARG PRISMA_BINARY='["debian-openssl-3.0.x"]'
 RUN bunx prisma generate
 
 FROM install AS prerelease
