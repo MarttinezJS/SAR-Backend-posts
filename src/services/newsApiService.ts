@@ -10,7 +10,8 @@ export class NewsApi {
   });
 
   static async searchNews(page?: string): Promise<NewsResp> {
-    let url = "/1/latest?country=co&language=es&removeduplicate=1";
+    let url =
+      "/1/latest?country=co&language=es&removeduplicate=1&category=breaking,crime,education,health,science";
     if (page) {
       url += `&page=${page}`;
     }
