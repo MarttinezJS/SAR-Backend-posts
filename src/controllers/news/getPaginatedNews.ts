@@ -1,10 +1,8 @@
 import { Context, Env } from "hono";
 import { getFeaturedNews, getNews } from "../../models";
-import { NewsApi } from "../../services/newsApiService";
 
 export const getPaginatedNews = async (context: Context<Env, "", {}>) => {
   const { page: rawPage, size: rawSize } = context.req.query();
-  NewsApi.searchNews();
   const page = Number.parseInt(rawPage);
   const size = Number.parseInt(rawSize);
   const news = await getNews(

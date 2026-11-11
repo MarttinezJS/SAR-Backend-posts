@@ -52,7 +52,7 @@ const serve = async () => {
   app.get("/data/devotional", validateAdmin, getDevotionals);
 
   // News
-  app.post("/data/news", createNew);
+  app.post("/data/news", validateAdmin, createNew);
   app.get("/news/featured", getFeaturedNewsController);
   app.get("/news", getPaginatedNews);
 

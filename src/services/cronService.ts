@@ -6,7 +6,8 @@ import prismaClient from "../helpers/prismaClient";
 import { sleep } from "bun";
 
 export const fetchNews = CronJob.from({
-  cronTime: "* */30 * * * *",
+  // segundo 0, cada 30 minutos (antes "* */30" corría cada segundo de esos minutos)
+  cronTime: "0 */30 * * * *",
   onTick: async () => {
     const now = new Date(Date.now());
     console.info(

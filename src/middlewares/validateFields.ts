@@ -1,17 +1,18 @@
 import { validator } from "hono/validator";
-import { z, ZodEffects } from "zod";
+import { z } from "zod";
 
-const validateFields = (
-  schema: z.ZodObject<any> | ZodEffects<z.ZodObject<any>>
-) =>
+const validateFields = (schema: z.ZodType) =>
   validator("json", (value, context) => {
     const parsed = schema.safeParse(value);
     if (!parsed.success) {
-      return context.json({
-        error: true,
-        message: "Campos no válidos.",
-        body: parsed.error,
-      });
+      return context.json(
+        {
+          error: true,
+          message: "Campos no válidos.",
+          body: parsed.error,
+        },
+        400,
+      );
     }
     return parsed.data;
   });

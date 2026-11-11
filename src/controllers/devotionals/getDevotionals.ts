@@ -28,8 +28,8 @@ export const getDevotionals = async (context: Context<Env, "", {}>) => {
         {
           error: false,
           message: "No se encontraron devocionales",
-          status: 204,
+          status: 404,
         },
-        204
+        404
       );
 };
